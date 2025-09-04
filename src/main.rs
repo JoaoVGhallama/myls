@@ -31,7 +31,7 @@ fn main() {
 
     //check if path does exist 
     if let Ok(does_exist) = fs::exists(&path){
-        //iterates get_files return, and print every file on it
+        //iterates get_files return, and print every file/Dir on it
         if does_exist {
             for file in get_files(&path){
                 println!("{:?}", file.green())
@@ -49,6 +49,7 @@ fn get_files(path: &Path) -> Vec<FileEntry> {
     let mut data = Vec::default();
     if let Ok(read_dir) = fs::read_dir(path){
         for entry in read_dir{
+            //big mess here, but it works. Clean later
             if let Ok(file) = entry{
                 if let Ok(meta)= fs::metadata(&file.path()){
                 data.push(FileEntry {
